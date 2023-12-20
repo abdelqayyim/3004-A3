@@ -126,7 +126,9 @@ void MainWindow::helpBtnClicked(){
 }
 void MainWindow::printElevatorArrayPositions() const {
     for (const auto &elevator : elevatorPosition) {
-        qDebug() << "[" << std::to_string(elevator[0]) << ", " << std::to_string(elevator[1]) << "]";
+//        qDebug() << "[" << std::to_string(elevator[0]) << ", " << std::to_string(elevator[1]) << "]";
+        qDebug() << "[" << QString::number(elevator[0]) << ", " << QString::number(elevator[1]) << "]";
+
     }
 }
 std::string MainWindow::getFloorIndex(int numFloors, int numElevators)
@@ -248,7 +250,7 @@ void MainWindow::upButtonClicked()
     std::string ind = getFloorIndex(elevatorFloor, elevatorNumber);
 
     std::string floorName = "floor_" + ind;
-    const char* floorNameCStr = floorName.c_str();
+    //const char* floorNameCStr = floorName.c_str();
 
     std::string first = "An Elevator is requested on floor "+std::to_string(userFloor)+"\n";
     std::string second = "And the closest elevator to that floor is Elevator: "+std::to_string(elevatorNumber)+"\n";
@@ -260,7 +262,7 @@ void MainWindow::upButtonClicked()
 
 void MainWindow::downButtonClicked()
 {
-    int spinBoxValue = ui->startingFloorInput->value();
+    //int spinBoxValue = ui->startingFloorInput->value();
 }
 
 void MainWindow::moveElevator(const std::string &currentPosition)
@@ -270,7 +272,7 @@ void MainWindow::moveElevator(const std::string &currentPosition)
     int startingColumn = currentPosition[1] - '0';
 
     std::string destinationFloorName = "floor_" + getFloorIndex(this->userFloor, startingColumn);
-    const char* destinationFloorNameCStr = destinationFloorName.c_str();
+    //const char* destinationFloorNameCStr = destinationFloorName.c_str();
 
     //qDebug() << "The current floor is floor_"<<getFloorIndex(startingRow, startingColumn) << "The detination floor is" <<destinationFloorName;
 
@@ -433,7 +435,9 @@ void MainWindow::disableElevatorButtons(){
             button->setStyleSheet("background-color: darkgrey;");
             disconnect(button, &QPushButton::clicked, 0, 0);
         } else {
-            qDebug() << "Button not found: " << buttonName;
+//            qDebug() << "Button not found: " << buttonName;
+            qDebug() << "Button not found:" << QString::fromStdString(buttonName);
+
         }
     }
 }
@@ -446,7 +450,9 @@ void MainWindow::enableElevatorButtons(){
         if (button) {
             connect(button, &QPushButton::clicked, this, &MainWindow::elevatorButtonClicked);
         } else {
-            qDebug() << "Button not found: " << buttonName;
+            //qDebug() << "Button not found: " << buttonName;
+            qDebug() << "Button not found:" << QString::fromStdString(buttonName);
+
         }
     }
 }
@@ -469,7 +475,10 @@ void MainWindow::elevatorButtonClicked() {
     }
     QPushButton* senderButton = qobject_cast<QPushButton*>(sender());
     int buttonText = senderButton->text().toInt();
-    qDebug() << "The occupied elevator is "<<occupiedElevator;
+    //qDebug() << "The occupied elevator is "<<occupiedElevator;
+    qDebug() << "Button not found:" << QString::fromStdString(occupiedElevator);
+
+
     std::string first = "User is in elevator: " + std::string(1, occupiedElevator[1]) + " and wants to go to floor: " + std::to_string(buttonText) + "\n";
     logMessage(first);
     // now move the elevator to its desired destination
